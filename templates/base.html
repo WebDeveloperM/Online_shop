@@ -29,7 +29,7 @@
                 <div id="navbarBasicExample" class="navbar-menu">
                     <div class="navbar-start">
                         {% for brand in brands %}
-                        <a href="{% url 'shop:products' %}?brand={{ brand.pk }}" class="navbar-item">
+                        <a href="{% url 'product_list' %}?brand={{ brand.pk }}" class="navbar-item">
                             {{ brand }}
                         </a>
                         {% endfor %}
