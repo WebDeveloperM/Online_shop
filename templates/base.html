@@ -1,5 +1,6 @@
 {% load static %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="{% static 'bulma.min.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.3/dist/css/bulma-carousel.min.css">
 </head>
+
 <body>
     <section class="hero">
         <div class="hero-head">
@@ -26,6 +28,11 @@
                 {% if user.is_authenticated %}
                 <div id="navbarBasicExample" class="navbar-menu">
                     <div class="navbar-start">
+                        {% for brand in brands %}
+                        <a href="{% url 'shop:products' %}?brand={{ brand.pk }}" class="navbar-item">
+                            {{ brand }}
+                        </a>
+                        {% endfor %}
                     </div>
                 </div>
                 {% endif %}
