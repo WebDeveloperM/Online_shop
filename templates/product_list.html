@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://bulma.io">
+                <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+            </a>
+
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
+                data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item is-active">
+                    Home
+                </a>
+                <div class="dropdown is-hoverable my-4">
+                    <div class="dropdown-trigger">
+                        <a class="navbar-item has-text-dark" aria-haspopup="true" aria-controls="dropdown-menu">
+                            Choose category
+                        </a>
+                    </div>
+                    <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                        <div class="dropdown-content">
+                            {% for category in categories %}
+                            <a href="{% url 'product_list' %}?category={{ category.pk }}" class="dropdown-item">
+                                {{ category }}
+                            </a>
+                            <br>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    {% for product in products %}
+    <img src="{{ product.thumb.url }}" alt="{{ product }}">
+    <p class="content">{{ product }}</p>
+    {% endfor %}
+
+{% endblock %}
