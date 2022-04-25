@@ -1,50 +1,68 @@
 {% extends 'base.html' %}
 
-{% block content %}
-
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="https://bulma.io">
-                <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
-            </a>
-
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
-                data-target="navbarBasicExample">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>
+{% block slider %}
+<div class="container-slide mb-6">
+    <div id="carousel-demo" class="carousel">
+        {% for slide in slides %}
+        <div class="item-1">
+            <img class="slider-img" src="{{ slide.image.url }}" alt="">
         </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+{% block content %}
+<div class="columns">
+    <div class="column is-one-fifth">
+        <aside class="menu has-background-primary-light p-4" style="height: 750px; border-radius: 10px">
+            <p class="menu-label is-size-3">
+                Categories
+            </p>
+            <ul class="menu-list">
+                {% for category in categories %}
+                <li>
+                    <a href="{% url 'product_list' %}?category={{ category.pk }}" class="dropdown-item is-size-5">
+                        {{ category }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </aside>
+    </div>
+    <div class="column">
+        <div class="columns is-multiline is-centered">
+            {% for product in products %}
+            <div class="column is-4">
+                <div class="card" style="min-height: 620px">
+                    <div class="card-image">
+                        <figure class="image">
+                            <img src="{{ product.thumb.url }}" alt="Placeholder image">
+                        </figure>
+                        <div class="has-text-right m-3">
+                            {% if product.is_new %}
+                            <span class="tag is-danger">New!</span>
+                            {% endif %}
+                            {% if product.is_discounted %}
+                            <span class="tag is-primary">Discount!</span>
+                            {% endif %}
+                        </div>
 
-        <div id="navbarBasicExample" class="navbar-menu">
-            <div class="navbar-start">
-                <a class="navbar-item is-active">
-                    Home
-                </a>
-                <div class="dropdown is-hoverable my-4">
-                    <div class="dropdown-trigger">
-                        <a class="navbar-item has-text-dark" aria-haspopup="true" aria-controls="dropdown-menu">
-                            Choose category
-                        </a>
                     </div>
-                    <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                        <div class="dropdown-content">
-                            {% for category in categories %}
-                            <a href="{% url 'product_list' %}?category={{ category.pk }}" class="dropdown-item">
-                                {{ category }}
-                            </a>
+                    <div class="card-content">
+                        <div class="media">
                             <br>
-                            {% endfor %}
+                            <div class="media-content">
+                                <p class="title is-4">{{ product }}</p>
+                            </div>
+                        </div>
+                        <div class="content has-text-weight-bold">
+                            {{ product.price }} sum
                         </div>
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-    </nav>
-
-    {% for product in products %}
-    <img src="{{ product.thumb.url }}" alt="{{ product }}">
-    <p class="content">{{ product }}</p>
-    {% endfor %}
-
+    </div>
+</div>
 {% endblock %}
