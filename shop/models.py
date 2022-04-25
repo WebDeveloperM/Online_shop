@@ -46,3 +46,8 @@ class Brand(models.Model):
 class User(models.Model):
     email = models.EmailField(unique=True)
     nickname = models.CharField(max_length=100, null=True)
+
+
+
+class Slide(models.Model):
+    image = models.ImageField(default="slide.jpg")
