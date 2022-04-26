@@ -21,6 +21,7 @@
                     <a class="navbar-item" href="{% url 'product_list' %}">
                         <img src="https://mondaylabs.ru/static/img/logo-monday.svg" width="112" height="28">
                     </a>
+
                     <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
                         data-target="navbarBasicExample">
                         <span aria-hidden="true"></span>
@@ -39,9 +40,22 @@
                     </div>
                 </div>
 
+
+                <div class="navbar-end">
+                    <a class="navbar-item button my-4 mx-1">
+                        Welcome: {{ user }}
+                    </a>
+                    <span class="navbar-item">
+                        <a href="{% url 'sign_out' %}" class="button is-danger">Sign out</a>
+                    </span>
+                </div>
+
+
+
             </nav>
         </div>
         <div class="hero-body">
+
             {% block auth %}
             {% endblock %}
 
