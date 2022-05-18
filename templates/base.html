@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'bulma.css' %}">
     <link rel="stylesheet" href="{% static 'bulma.min.css' %}">
 
@@ -42,12 +42,54 @@
 
 
                 <div class="navbar-end">
-                    <a class="navbar-item button my-4 mx-1">
-                        Welcome: {{ user }}
+
+                    <form action="{% url 'product_list' %}" method="get">
+                        <div class="field has-addons mt-4 mr-2">
+                            <div class="control">
+                                <input class="input" type="search" placeholder="Find a product" name="search">
+                            </div>
+                            <div class="control">
+                                <button class="button is-info" type="submit">
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+
+                    <a class="navbar-item order" href="{% url 'cart' %}">
+                        <button class="button is-success">
+                            <ion-icon name="cart-outline" class="mr-2"></ion-icon>
+                            Cart
+                        </button>
                     </a>
+
                     <span class="navbar-item">
-                        <a href="{% url 'sign_out' %}" class="button is-danger">Sign out</a>
+                        <div class="dropdown is-hoverable">
+                            <div class="dropdown-trigger">
+                                <button class="button is-warning" aria-haspopup="true" aria-controls="dropdown-menu">
+                                    Welcome <span class="has-text-weight-bold mx-1">{{ user }}</span>
+                                </button>
+                            </div>
+                            <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                <div class="dropdown-content">
+                                    <a href="{% url 'edit_profile' %}" class="dropdown-item">
+                                        Edit profile
+                                    </a>
+                                    <a href="{% url 'reset_password' %}" class="dropdown-item">
+                                        Reset password
+                                    </a>
+                                    <hr class="dropdown-divider">
+                                    <a href="{% url 'sign_out' %}" class="dropdown-item">
+                                        Sign out
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </span>
+
+
+
                 </div>
 
 
@@ -80,6 +122,8 @@
             infinite: true,
         });
     </script>
+
+
 
 </body>
 

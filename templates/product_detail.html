@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="section product-detail">
+    <div class="columns is-flex is-align-items-center">
+        <div class="column">
+            <div class="box">
+                <figure class="image product-detail-image">
+                    <img src="{{ product.thumb.url }}" alt="Placeholder image">
+                </figure>
+            </div>
+        </div>
+        <div class="column">
+            <div class="content">
+                <p class="title is-size-2">
+                    {{ product.title }}
+                    {% if product.is_new %}
+                    <span class="tag is-danger">New!</span>
+                    {% endif %}
+                    {% if product.is_discounted %}
+                    <span class="tag is-primary">Discount!</span>
+                    {% endif %}
+                </p>
+                <p class="title is-size-3 has-text-info">{{ product.price }} sum</p>
+                <p class="title is-size-5 has-text-grey-light">0 отзывов</p>
+                <p class="title">Brand: {{ product.brand }}</p>
+                <p class="title has-text-grey-light is-size-4">Наличие: Есть в наличии</p>
+                <p class="title is-size-4">
+                    Поделится:
+                    <span class="is-size-4 mx-3">
+                        <a href="#">
+                            <ion-icon name="logo-whatsapp" class="order"></ion-icon>
+                        </a>
+                        <a href="#">
+                            <ion-icon name="logo-youtube" class="order"></ion-icon>
+                        </a>
+                        <a href="#">
+                            <ion-icon name="logo-facebook" class="order"></ion-icon>
+                        </a>
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="section">
+    <div class="columns is-flex is-align-items-center">
+        <div class="column">
+            <div class="box">
+                <figure class="image product-detail-image">
+                    <img src="{{ product.thumb.url }}" alt="Placeholder image">
+                </figure>
+            </div>
+        </div>
+        <div class="column">
+            <div class="box">
+                <div class="content">
+                    <p class="title is-size-2">
+                        {{ product.title }}
+                        {% if product.is_new %}
+                        <span class="tag is-danger">New!</span>
+                        {% endif %}
+                        {% if product.is_discounted %}
+                        <span class="tag is-primary">Discount!</span>
+                        {% endif %}
+                    </p>
+                    <p class="title is-size-5 has-text-grey-light">{{ product.description }}</p>
+                    <form action="{% url 'shop:rate_product' product.pk %}" method="post">
+                        {% csrf_token %}
+                        {% for field in form %}
+                        {% if field.name == 'rate' %}
+                        <div class="select is-fullwidth my-2">
+                            <label for="{{ field.id_for_label }}" class="label is-size-4">{{ field.label }}</label>
+                            {{ field }}
+                        </div>
+                        {% else %}
+                        <div class="field">
+                            <label for="{{ field.id_for_label }}" class="label is-size-4">
+                                {{ field.label }}
+                            </label>
+                            {{ field }}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        <div class="mt-6">
+                            <button class='button is-success' type="submit">Submit</button>
+                            <a class='button is-danger' href="{% url 'shop:product_detail' product.pk %}">
+                                Back to {{ product.title }}</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="section">
+        {% if reviews %}
+        <div class="title is-size-3 has-text-centered">Reviews of other clients</div>
+        <div class="columns is is-multiline is-centered">
+            {% for review in reviews %}
+            <div class="column is-4">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-left">
+                                <figure class="image is-48x48">
+                                    <img src="https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png"
+                                        alt="Placeholder image" class="is-rounded">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <p class="title is-size-4">{{ review.user.first_name }}</p>
+                                <p class="subtitle">@{{ review.user }}</p>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <div>
+                                {{ review.rate }}/5
+                                <ion-icon name="star-outline"></ion-icon>
+                                <span class="mx-2 has-text-grey-light">{{ review.date }}</span>
+                            </div>
+                        </div>
+                        <div class="subtitle has-text-grey">
+                            {{ review.text }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="title is-size-3 has-text-centered">No reviews yet. Be first to leave one</div>
+        {% endif %}
+    </div>
+    <hr>
+</div>
+{% endblock %}

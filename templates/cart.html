@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="card mb-4 p-4 has-text-weight-bold is-size-4">
+    <a class="button has-text-left is-danger" href="{% url 'product_list' %}">Back to main page</a>
+    {% if cart_items %}
+    <a class="button has-text-right is-info" href="{% url 'create_order' %}">Checkout</a>
+    {% endif %}
+    <hr>
+    <div class="columns has-text-centered">
+        <div class="column">
+            <div class="content">Items: {{ total_quantity }}</div>
+        </div>
+        <div class="column">
+            <div class="content">Total: {{ total_price }} $</div>
+        </div>
+    </div>
+</div>
+<div class="card p-5">
+    <div class="content">
+        <div class="table has-text-centered">
+            {% if cart_items %}
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Item</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr>
+                        <td>
+                            <img src="{{ item.product.thumb.url }}" alt="" width="100" height="100">
+                        </td>
+                        <td>{{ item }}</td>
+                        <td>{{ item.product.price }} $</td>
+                        <td>{{ item.quantity }}
+
+                            <div class="quantity ml-3">
+                                <a href="{% url 'edit_cart_item' item.id %}?action=add">
+                                    <img src="{% static 'images/arrow-up.png' %}" class="arrows" alt="">
+                                </a>
+                                <a href="{% url 'edit_cart_item' item.id %}?action=take">
+                                    <img src="{% static 'images/arrow-down.png' %}" class="arrows" alt="">
+                                </a>
+                            </div>
+
+                        <td>
+                        <td>{{ item.total_price }} $</td>
+                        <td>
+                            <a href="{% url 'delete_cart_item' item.pk %}" style="font-size: 20px; color: black">
+                                <ion-icon name="trash-outline"></ion-icon>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p class="title has-text-centered">Nothing added</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block slider %}
 <div class="container-slide mb-6">
     <div id="carousel-demo" class="carousel">
@@ -32,38 +32,79 @@
     </div>
     <div class="column">
         <div class="columns is-multiline is-centered">
+            {% if products %}
             {% for product in products %}
-            <div class="column is-4">
-                <div class="card" style="min-height: 620px">
-                    <div class="card-image">
-                        <figure class="image">
-                            <img src="{{ product.thumb.url }}" alt="Placeholder image">
-                        </figure>
-                        <div class="has-text-right m-3">
-                            {% if product.is_new %}
-                            <span class="tag is-danger">New!</span>
-                            {% endif %}
-                            {% if product.is_discounted %}
-                            <span class="tag is-primary">Discount!</span>
-                            {% endif %}
-                        </div>
+            <a href="{% url 'product_detail' product.pk %}">
+                <div class="column is-4">
+                    <div class="card product_cart" style="min-height: 620px">
+                        <div class="card-image">
+                            <figure class="image">
+                                <img src="{{ product.thumb.url }}" alt="Placeholder image">
+                            </figure>
+                            <div class="has-text-right m-3">
+                                {% if product.is_new %}
+                                <span class="tag is-danger">New!</span>
+                                {% endif %}
+                                {% if product.is_discounted %}
+                                <span class="tag is-primary">Discount! -20%</span>
 
-                    </div>
-                    <div class="card-content">
-                        <div class="media">
-                            <br>
-                            <div class="media-content">
-                                <p class="title is-4">{{ product }}</p>
+                                {% endif %}
                             </div>
+
                         </div>
-                        <div class="content has-text-weight-bold">
-                            {{ product.price }} $
+                        <div class="card-content">
+                            <div class="media">
+                                <br>
+                                <div class="media-content">
+                                    <p class="title is-4">{{ product }}</p>
+                                </div>
+                            </div>
+
+                            <div class="columns">
+                                {% if product.is_discounted %}
+                                <div class="column">
+                                    Asl narxi:
+                                    {{ product.price }} $
+                                </div>
+                                <div class="column">
+                                    Chegirmada:
+                                    {{ product.sale_product_price }} $
+                                </div>
+                                {% else %}
+                                <div class="column">
+                                    {{ product.price }} $
+                                </div>
+                                {% endif %}
+                                <div class="column has-text-right">
+                                    <a href="{% url 'product_list' %}?product={{ product.id }}">
+                                        <ion-icon name="cart-outline" class="order"></ion-icon>
+                                    </a>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
             {% endfor %}
+            {% else %}
+            <div class="container">
+                <div class="columns">
+                    <div class="column">
+
+                        <img class="image" src="{% static '/images/not_found.jpg' %}" alt="">
+                    </div>
+                </div>
+
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>
 {% endblock %}
+
+
+<form action="">
+    <label for="">Your password</label>
+    <input type="password" class="input">
+</form>
